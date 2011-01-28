@@ -1,0 +1,18 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
+import os
+import sys
+
+try:
+    import smtptester
+except ImportError:
+    sys.path.insert(0, os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir)))
+    import smtptester
+
+
+app = smtptester.wx.App(redirect=False)
+frame = smtptester.SmtpTester(None, smtptester.wx.ID_ANY, smtptester.__name__)
+app.MainLoop()
