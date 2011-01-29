@@ -14,14 +14,17 @@ Features
 
 - Tested on Windows and Linux (should run anywhere that Python runs)
 - Graphical (no more telnet)
-- Trace window showing live progress from DNS record look-ups through SMTP session
+- Trace window showing live progress from DNS record look-ups through SMTP
+  session
 - Ability to override all DNS and SMTP settings
 - Support for SASL and TLS
 
 Screenshots
 ------------
 
-.. image:: /mconigliaro/SMTP-Tester/raw/master/resources/screenshots/linux.png
+Linux
+.. image:: /mconigliaro/SMTP-Tester/raw/master/screenshots/linux.png
 
-.. image:: /mconigliaro/SMTP-Tester/raw/master/resources/screenshots/windows.png
+Windows
+.. image:: /mconigliaro/SMTP-Tester/raw/master/screenshots/windows.png
 
