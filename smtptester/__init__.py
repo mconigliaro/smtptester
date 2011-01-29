@@ -26,13 +26,14 @@ __version_info__ = ('0', '1', '3')
 __version__ = '.'.join(__version_info__)
 __author__ = 'Michael T. Conigliaro'
 __author_email__ = 'mike [at] conigliaro [dot] org'
+__artist__ = "Mark James (Silk icons from famfamfam.com)"
+__copyright__ = "(c) 2011 %s" % (__author__)
 __url__ = 'http://github.com/mconigliaro/SMTP-Tester'
 __description__ = "A cross-platform graphical SMTP diagnostic tool"
 
 
 APP_ICON = "smtptester.ico"
 APP_CONFIG = "smtptester"
-
 APP_DEFAULT_WIDTH = 525
 APP_DEFAULT_HEIGHT = 700
 
@@ -44,7 +45,7 @@ RESULT = '#009900'
 NOTSET = '#000000'
 
 SMTP_DEFAULT_PORT = 25
-SMTP_DEFAULT_CONNECT_TIMEOUT = 30
+SMTP_DEFAULT_CONNECT_TIMEOUT = 10
 SMTP_DEBUGLEVEL = 0
 DNS_DEFAULT_PORT = 53
 DNS_DEFAULT_QUERY_TIMEOUT = 10
@@ -256,11 +257,11 @@ class SmtpTester(wx.Frame):
         info = wx.AboutDialogInfo()
         info.Name = __name__
         info.Version = __version__
-        info.Copyright = "(c) 2011 %s" % (__author__)
+        info.Copyright = __copyright__
         info.Description = __description__
         info.WebSite = (__url__, __url__)
-        info.Developers = [__author__]
-        info.Artists = [ "Mark James (Silk icons from famfamfam.com)" ]
+        info.Developers = ['%s <%s>' % (__author__, __author_email__)]
+        info.Artists = [__artist__]
         wx.AboutBox(info)
 
     def toggleWorkingMode(self, value):

@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import re
 import socket
 
+
 def is_ip(addr):
     result = False
     if re.search("^[0-9\.]+$", addr):
