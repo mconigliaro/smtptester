@@ -18,9 +18,10 @@ Features
 - Ability to override all DNS and SMTP settings
 - Support for SASL and TLS
 
-Screen Shots
+Screenshots
 ------------
 
-.. image:: /mconigliaro/SMTP-Tester/tree/master/resources/screenshots/linux.png
+.. image:: /mconigliaro/SMTP-Tester/raw/master/resources/screenshots/linux.png
 
-.. image:: /mconigliaro/SMTP-Tester/tree/master/resources/screenshots/windows.png
+.. image:: /mconigliaro/SMTP-Tester/raw/master/resources/screenshots/windows.png
+
