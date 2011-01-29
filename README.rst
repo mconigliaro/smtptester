@@ -22,9 +22,7 @@ Features
 Screenshots
 ------------
 
-Linux
 .. image:: /mconigliaro/SMTP-Tester/raw/master/screenshots/linux.png
 
-Windows
 .. image:: /mconigliaro/SMTP-Tester/raw/master/screenshots/windows.png
 
