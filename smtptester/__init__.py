@@ -28,11 +28,11 @@ __author__ = 'Michael T. Conigliaro'
 __author_email__ = 'mike [at] conigliaro [dot] org'
 __artist__ = "Mark James (Silk icons from famfamfam.com)"
 __copyright__ = "(c) 2011 %s" % (__author__)
-__url__ = 'http://github.com/mconigliaro/SMTP-Tester'
+__url__ = 'http://github.com/mconigliaro/%s' % ''.join(__name__.lower().split())
 __description__ = "A cross-platform graphical SMTP diagnostic tool"
 
 
-APP_ICON = "smtptester.ico"
+APP_ICON = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir, 'resources', 'smtptester.ico'))
 APP_CONFIG = "smtptester"
 APP_DEFAULT_WIDTH = 525
 APP_DEFAULT_HEIGHT = 700

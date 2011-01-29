@@ -16,7 +16,7 @@ def read(file):
     return result
 
 setup(
-    name = smtptester.__name__.lower(),
+    name = ''.join(smtptester.__name__.lower().split()),
     version = smtptester.__version__,
 
     author = smtptester.__author__,
@@ -25,10 +25,9 @@ setup(
     long_description = read('README.rst'),
     url = smtptester.__url__,
 
-    keywords = 'FIXME',
+    keywords = 'smtp tester',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
-        'Environment :: MacOS X',
         'Environment :: Win32 (MS Windows)',
         'Environment :: X11 Applications :: GTK',
         'Intended Audience :: System Administrators',
@@ -42,9 +41,11 @@ setup(
         'Topic :: Utilities'
     ],
 
-    install_requires = ['nose', 'setuptools', 'wxPython', 'dnspython'],
+    install_requires = ['setuptools', 'wxPython', 'dnspython'],
 
     packages = find_packages(),
     scripts = ['bin/smtptester'],
-    include_package_data = True
+    data_files = [
+      ('resources', ['resources/smtptester.ico'])
+    ]
 )
