@@ -21,18 +21,23 @@ from . import util
 from . import validators
 
 
-__name__ = 'SMTP Tester'
+__app_name__ = 'SMTP Tester'
 __version_info__ = ('0', '1', '4')
 __version__ = '.'.join(__version_info__)
 __author__ = 'Michael Paul Thomas Conigliaro'
 __author_email__ = 'mike [at] conigliaro [dot] org'
 __artist__ = 'Mark James (Silk icons from famfamfam.com)'
 __copyright__ = "(c) %s %s" % (time.strftime('%Y'), __author__)
-__url__ = 'http://github.com/mconigliaro/%s' % ''.join(__name__.lower().split())
+__url__ = 'http://github.com/mconigliaro/%s' % ''.join(__app_name__.lower().split())
 __description__ = 'A cross-platform graphical SMTP diagnostic tool'
 
 
-APP_ICON = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir, 'smtptester.xpm'))
+if hasattr(sys, 'frozen'):
+    import win32api
+    APP_ICON = win32api.GetModuleFileName(win32api.GetModuleHandle(None))
+else:
+    APP_ICON = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data', 'smtptester.xpm'))
+
 APP_CONFIG = 'smtptester'
 APP_DEFAULT_WIDTH = 525
 APP_DEFAULT_HEIGHT = 700
@@ -61,15 +66,8 @@ class SmtpTester(wx.Frame):
         wx.Frame.__init__(self, parent, id, title,
           size=(self.cfg.ReadInt('appWidth', APP_DEFAULT_WIDTH),
                 self.cfg.ReadInt('appHeight', APP_DEFAULT_HEIGHT)))
+        self.SetIcon(wx.Icon(APP_ICON))
         self.panel = wx.Panel(self)
-
-        # Set icon
-        if hasattr(sys, "frozen"):
-            import win32api
-            exeName = win32api.GetModuleFileName(win32api.GetModuleHandle(None))
-            self.SetIcon(wx.Icon(exeName))
-        else:
-            self.SetIcon(wx.Icon(APP_ICON))
 
         # Define file menu
         fileMenu = wx.Menu()
@@ -104,7 +102,7 @@ class SmtpTester(wx.Frame):
         self.mailToTextCtrl.SetFocus()
         self.mailMsgTextCtrl = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE,
             value="X-Mailer: %s %s\nFrom: %s\nTo: %s\nSubject: Test message\n\nThis is a test." %
-                (__name__, __version__, self.cfg.Read('mailFrom', self.getMyEmailAddress()), self.cfg.Read('mailTo')))
+                (__app_name__, __version__, self.cfg.Read('mailFrom', self.getMyEmailAddress()), self.cfg.Read('mailTo')))
         self.useNsCheckBox = wx.CheckBox(self.panel, label='Specify DNS server')
         self.useNsCheckBox.SetValue(self.cfg.ReadBool('useNs'))
         self.useNsHostTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('useNsHost'), validator=validators.HostAddressValidator())
@@ -253,7 +251,7 @@ class SmtpTester(wx.Frame):
 
     def onHelpAbout(self, e):
         info = wx.AboutDialogInfo()
-        info.Name = __name__
+        info.Name = __app_name__
         info.Version = __version__
         info.Copyright = __copyright__
         info.Description = __description__

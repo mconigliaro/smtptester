@@ -1,28 +1,24 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import os
 
-import distribute_setup
-distribute_setup.use_setuptools()
+from distribute_setup import use_setuptools
+use_setuptools()
 from setuptools import setup, find_packages
 
 import smtptester
 
 
-def read(file):
-    with open(os.path.abspath(os.path.join(os.path.dirname(__file__), file))) as f:
-        result = f.read()
-    f.closed
-    return result
-
 setup(
-    name = ''.join(smtptester.__name__.lower().split()),
+    name = ''.join(smtptester.__app_name__.lower().split()),
     version = smtptester.__version__,
 
     author = smtptester.__author__,
     author_email = smtptester.__author_email__,
     description = smtptester.__description__,
-    long_description = read('README.rst'),
+    long_description = open(os.path.abspath(os.path.join(
+                            os.path.dirname(__file__), 'README.rst'))).read(),
     url = smtptester.__url__,
 
     keywords = 'smtp tester',
@@ -44,7 +40,9 @@ setup(
 
     install_requires = ['setuptools', 'dnspython'],
 
-    packages = find_packages(),
-    scripts = ['bin/smtptester'],
-    data_files = ['smtptester.xpm']
+    packages = ['smtptester'],
+    package_data = {
+        'smtptester': ['data/*']
+    },
+    scripts = ['bin/smtptester']
 )

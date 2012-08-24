@@ -40,7 +40,7 @@ Install `wxPython <http://wxpython.org/download.php>`_ (version 2.9)
 
   # easy_install smtptester
 
-This should add an `smtptester` executable to your $PATH.
+This should add an **smtptester** executable to your **$PATH**.
 
 License
 -------
