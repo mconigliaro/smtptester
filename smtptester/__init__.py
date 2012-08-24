@@ -22,18 +22,18 @@ from . import validators
 
 
 __name__ = 'SMTP Tester'
-__version_info__ = ('0', '1', '3')
+__version_info__ = ('0', '1', '4')
 __version__ = '.'.join(__version_info__)
-__author__ = 'Michael T. Conigliaro'
+__author__ = 'Michael Paul Thomas Conigliaro'
 __author_email__ = 'mike [at] conigliaro [dot] org'
-__artist__ = "Mark James (Silk icons from famfamfam.com)"
-__copyright__ = "(c) 2011 %s" % (__author__)
+__artist__ = 'Mark James (Silk icons from famfamfam.com)'
+__copyright__ = "(c) %s %s" % (time.strftime('%Y'), __author__)
 __url__ = 'http://github.com/mconigliaro/%s' % ''.join(__name__.lower().split())
-__description__ = "A cross-platform graphical SMTP diagnostic tool"
+__description__ = 'A cross-platform graphical SMTP diagnostic tool'
 
 
-APP_ICON = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir, 'resources', 'smtptester.ico'))
-APP_CONFIG = "smtptester"
+APP_ICON = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), os.pardir, 'smtptester.xpm'))
+APP_CONFIG = 'smtptester'
 APP_DEFAULT_WIDTH = 525
 APP_DEFAULT_HEIGHT = 700
 
@@ -67,31 +67,31 @@ class SmtpTester(wx.Frame):
         if hasattr(sys, "frozen"):
             import win32api
             exeName = win32api.GetModuleFileName(win32api.GetModuleHandle(None))
-            self.SetIcon(wx.Icon(exeName, wx.BITMAP_TYPE_ICO))
+            self.SetIcon(wx.Icon(exeName))
         else:
-            self.SetIcon(wx.Icon(APP_ICON, wx.BITMAP_TYPE_ICO))
+            self.SetIcon(wx.Icon(APP_ICON))
 
         # Define file menu
         fileMenu = wx.Menu()
         fileExitMenuItem = fileMenu.Append(wx.ID_ANY,
-            "E&xit", "Terminate the program")
+            'E&xit', 'Terminate the program')
 
         # Define options menu
         optionsMenu = wx.Menu()
         self.saveSettingsMenuItem = optionsMenu.Append(wx.ID_ANY,
-            "S&ave Settings on Exit", "Save Settings on Exit", wx.ITEM_CHECK)
+            'S&ave Settings on Exit', 'Save Settings on Exit', wx.ITEM_CHECK)
         self.saveSettingsMenuItem.Check()
 
         # Define help menu
         helpMenu = wx.Menu()
         helpAboutMenuItem = helpMenu.Append(wx.ID_ANY,
-            "&About", "Information about this program")
+            '&About', 'Information about this program')
 
         # Assign menus to menu bar
         menuBar = wx.MenuBar()
-        menuBar.Append(fileMenu,"&File")
-        menuBar.Append(optionsMenu,"&Options")
-        menuBar.Append(helpMenu,"&Help")
+        menuBar.Append(fileMenu,'&File')
+        menuBar.Append(optionsMenu,'&Options')
+        menuBar.Append(helpMenu,'&Help')
         self.SetMenuBar(menuBar)
 
         # Initialize thread variables
@@ -99,36 +99,34 @@ class SmtpTester(wx.Frame):
         self.abortEvent = delayedresult.AbortEvent()
 
         # Define controls
-        # FIXME: if self.resultsTextCtrl is created after self.mailFromTextCtrl,
-        # you can't see the entire text in self.mailFromTextCtrl. wx bug?
-        self.resultsTextCtrl = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_RICH2|wx.TE_READONLY)
         self.mailFromTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('mailFrom', self.getMyEmailAddress()), validator=validators.EmailAddressValidator())
         self.mailToTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('mailTo'), validator=validators.EmailAddressValidator())
         self.mailToTextCtrl.SetFocus()
         self.mailMsgTextCtrl = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE,
-            value="X-Mailer: %s %s\nFrom: %s\nTo: %s\nSubject: Test message from %s %s\n\n" %
-                (__name__, __version__, self.cfg.Read('mailFrom', self.getMyEmailAddress()), self.cfg.Read('mailTo'), __name__, __version__))
-        self.useNsCheckBox = wx.CheckBox(self.panel, label="Specify DNS server")
+            value="X-Mailer: %s %s\nFrom: %s\nTo: %s\nSubject: Test message\n\nThis is a test." %
+                (__name__, __version__, self.cfg.Read('mailFrom', self.getMyEmailAddress()), self.cfg.Read('mailTo')))
+        self.useNsCheckBox = wx.CheckBox(self.panel, label='Specify DNS server')
         self.useNsCheckBox.SetValue(self.cfg.ReadBool('useNs'))
         self.useNsHostTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('useNsHost'), validator=validators.HostAddressValidator())
         self.useNsPortSpinCtrl = wx.SpinCtrl(self.panel, value=self.cfg.Read('useNsPort', str(DNS_DEFAULT_PORT)), min=1, max=65535, size=(50,-1))
         self.nsQueryTimeoutSpinCtrl = wx.SpinCtrl(self.panel, value=self.cfg.Read('nsQueryTimeout', str(DNS_DEFAULT_QUERY_TIMEOUT)), min=1, max=65535, size=(50,-1))
-        self.useNsTcpCheckBox = wx.CheckBox(self.panel, label="Use TCP")
+        self.useNsTcpCheckBox = wx.CheckBox(self.panel, label='Use TCP')
         self.useNsTcpCheckBox.SetValue(self.cfg.ReadBool('useNsTcp'))
-        self.useSmtpCheckBox = wx.CheckBox(self.panel, label="Specify SMTP server")
+        self.useSmtpCheckBox = wx.CheckBox(self.panel, label='Specify SMTP server')
         self.useSmtpCheckBox.SetValue(self.cfg.ReadBool('useSmtp'))
         self.useSmtpHostTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('useSmtpHost'), validator=validators.HostAddressValidator())
         self.useSmtpPortSpinCtrl = wx.SpinCtrl(self.panel, value=self.cfg.Read('useSmtpPort', str(SMTP_DEFAULT_PORT)), min=1, max=65535, size=(50,-1))
         self.smtpConnectTimeoutSpinCtrl = wx.SpinCtrl(self.panel, value=self.cfg.Read('smtpConnectTimeout', str(SMTP_DEFAULT_CONNECT_TIMEOUT)), min=1, max=65535, size=(50,-1))
         self.useSmtpHeloTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('useSmtpHelo', socket.getfqdn()), validator=validators.HostAddressValidator())
-        self.useAuthCheckBox = wx.CheckBox(self.panel, label="Use Authentication")
+        self.useAuthCheckBox = wx.CheckBox(self.panel, label='Use Authentication')
         self.useAuthCheckBox.SetValue(self.cfg.ReadBool('useAuth'))
         self.useAuthUserTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('useAuthUser'), validator=validators.GenericTextValidator(flag=validators.VALIDATE_NOT_NULL))
         self.useAuthPassTextCtrl = wx.TextCtrl(self.panel, value=self.cfg.Read('useAuthPass'), style=wx.TE_PASSWORD)
-        self.useTlsCheckBox = wx.CheckBox(self.panel, label="Use TLS encryption")
+        self.useTlsCheckBox = wx.CheckBox(self.panel, label='Use TLS encryption')
         self.useTlsCheckBox.SetValue(self.cfg.ReadBool('useTls'))
         self.okButton = wx.Button(self.panel, wx.ID_OK)
         self.cancelButton = wx.Button(self.panel, wx.ID_CANCEL)
+        self.resultsTextCtrl = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_RICH2|wx.TE_READONLY)
 
         # Put all controls into correct state
         if not self.useNsCheckBox.IsChecked():
@@ -144,11 +142,11 @@ class SmtpTester(wx.Frame):
 
         # Message fields
         messageSizer = wx.StaticBoxSizer(wx.StaticBox(self.panel, label='Message'), orient=wx.VERTICAL)
-        messageSizer.Add(wx.StaticText(self.panel, label="From:"))
+        messageSizer.Add(wx.StaticText(self.panel, label='From:'))
         messageSizer.Add(self.mailFromTextCtrl, flag=wx.ALL|wx.EXPAND)
-        messageSizer.Add(wx.StaticText(self.panel, label="To:"))
+        messageSizer.Add(wx.StaticText(self.panel, label='To:'))
         messageSizer.Add(self.mailToTextCtrl, flag=wx.ALL|wx.EXPAND)
-        messageSizer.Add(wx.StaticText(self.panel, label="Message:"))
+        messageSizer.Add(wx.StaticText(self.panel, label='Message:'))
         messageSizer.Add(self.mailMsgTextCtrl, proportion=1, flag=wx.ALL|wx.EXPAND)
         mainSizer.Add(messageSizer, pos=(0,0), span=(4,1), flag=wx.ALL|wx.EXPAND)
 
@@ -157,11 +155,11 @@ class SmtpTester(wx.Frame):
         innerSizer = wx.GridBagSizer()
         innerSizer.SetEmptyCellSize((0,0)) # FIXME http://trac.wxwidgets.org/ticket/3105
         innerSizer.Add(self.useNsCheckBox, pos=(3,0), span=(1,2))
-        innerSizer.Add(wx.StaticText(self.panel, label="Host:"), pos=(4,0))
+        innerSizer.Add(wx.StaticText(self.panel, label='Host:'), pos=(4,0))
         innerSizer.Add(self.useNsHostTextCtrl, pos=(5,0), flag=wx.ALL|wx.EXPAND)
-        innerSizer.Add(wx.StaticText(self.panel, label="Port:"), pos=(4,1))
+        innerSizer.Add(wx.StaticText(self.panel, label='Port:'), pos=(4,1))
         innerSizer.Add(self.useNsPortSpinCtrl, pos=(5,1))
-        innerSizer.Add(wx.StaticText(self.panel, label="Timeout:"), pos=(4,2))
+        innerSizer.Add(wx.StaticText(self.panel, label='Timeout:'), pos=(4,2))
         innerSizer.Add(self.nsQueryTimeoutSpinCtrl, pos=(5,2), flag=wx.ALL|wx.EXPAND)
         innerSizer.Add(self.useNsTcpCheckBox, pos=(6,0), span=(1,2))
         nsSizer.Add(innerSizer, flag=wx.ALL|wx.EXPAND)
@@ -172,15 +170,15 @@ class SmtpTester(wx.Frame):
         innerSizer = wx.GridBagSizer()
         innerSizer.SetEmptyCellSize((0,0)) # FIXME http://trac.wxwidgets.org/ticket/3105
         innerSizer.Add(self.useSmtpCheckBox, pos=(3,0), span=(1,2))
-        innerSizer.Add(wx.StaticText(self.panel, label="Host:"), pos=(4,0))
+        innerSizer.Add(wx.StaticText(self.panel, label='Host:'), pos=(4,0))
         innerSizer.Add(self.useSmtpHostTextCtrl, pos=(5,0), flag=wx.ALL|wx.EXPAND)
-        innerSizer.Add(wx.StaticText(self.panel, label="Port:"), pos=(4,1))
+        innerSizer.Add(wx.StaticText(self.panel, label='Port:'), pos=(4,1))
         innerSizer.Add(self.useSmtpPortSpinCtrl, pos=(5,1))
 
-        innerSizer.Add(wx.StaticText(self.panel, label="Timeout:"), pos=(4,2))
+        innerSizer.Add(wx.StaticText(self.panel, label='Timeout:'), pos=(4,2))
         innerSizer.Add(self.smtpConnectTimeoutSpinCtrl, pos=(5,2), flag=wx.ALL|wx.EXPAND)
 
-        innerSizer.Add(wx.StaticText(self.panel, label="HELO/EHLO:"), pos=(6,0))
+        innerSizer.Add(wx.StaticText(self.panel, label='HELO/EHLO:'), pos=(6,0))
         innerSizer.Add(self.useSmtpHeloTextCtrl, pos=(7,0), span=(1,3), flag=wx.ALL|wx.EXPAND)
         smtpSizer.Add(innerSizer, flag=wx.ALL|wx.EXPAND)
         mainSizer.Add(smtpSizer, pos=(1,1), flag=wx.ALL|wx.EXPAND)
@@ -188,9 +186,9 @@ class SmtpTester(wx.Frame):
         # Security Options
         secSizer = wx.StaticBoxSizer(wx.StaticBox(self.panel, label='Security'), orient=wx.VERTICAL)
         secSizer.Add(self.useAuthCheckBox)
-        secSizer.Add(wx.StaticText(self.panel, label="Username:"))
+        secSizer.Add(wx.StaticText(self.panel, label='Username:'))
         secSizer.Add(self.useAuthUserTextCtrl, flag=wx.ALL|wx.EXPAND)
-        secSizer.Add(wx.StaticText(self.panel, label="Password:"))
+        secSizer.Add(wx.StaticText(self.panel, label='Password:'))
         secSizer.Add(self.useAuthPassTextCtrl, flag=wx.ALL|wx.EXPAND)
         secSizer.Add(self.useTlsCheckBox)
         mainSizer.Add(secSizer, pos=(2,1), flag=wx.ALL|wx.EXPAND)
@@ -218,8 +216,8 @@ class SmtpTester(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onFileExit, fileExitMenuItem)
         self.Bind(wx.EVT_MENU, self.onHelpAbout, helpAboutMenuItem)
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
-        self.mailFromTextCtrl.Bind(wx.EVT_KILL_FOCUS, self.onUpdateMailFromTextCtrl)
-        self.mailToTextCtrl.Bind(wx.EVT_KILL_FOCUS, self.onUpdateMailToTextCtrl)
+        self.mailFromTextCtrl.Bind(wx.EVT_TEXT, self.onUpdateMailFromTextCtrl)
+        self.mailToTextCtrl.Bind(wx.EVT_TEXT, self.onUpdateMailToTextCtrl)
         self.useNsCheckBox.Bind(wx.EVT_CHECKBOX, self.onUseNsCheckBox)
         self.useSmtpCheckBox.Bind(wx.EVT_CHECKBOX, self.onUseSmtpCheckBox)
         self.useAuthCheckBox.Bind(wx.EVT_CHECKBOX, self.onAuthCheckBox)
@@ -231,24 +229,24 @@ class SmtpTester(wx.Frame):
 
     def onCloseWindow(self, e):
         if self.saveSettingsMenuItem.IsChecked():
-            self.cfg.WriteInt("appWidth", self.GetSizeTuple()[0])
-            self.cfg.WriteInt("appHeight", self.GetSizeTuple()[1])
-            self.cfg.Write("mailFrom", self.mailFromTextCtrl.GetValue())
-            self.cfg.Write("mailTo", self.mailToTextCtrl.GetValue())
-            self.cfg.WriteBool("useNs", self.useNsCheckBox.GetValue())
-            self.cfg.Write("useNsHost", self.useNsHostTextCtrl.GetValue())
-            self.cfg.Write("useNsPort", str(self.useNsPortSpinCtrl.GetValue()))
-            self.cfg.Write("nsQueryTimeout", str(self.nsQueryTimeoutSpinCtrl.GetValue()))
-            self.cfg.WriteBool("useNsTcp", self.useNsTcpCheckBox.GetValue())
-            self.cfg.WriteBool("useSmtp", self.useSmtpCheckBox.GetValue())
-            self.cfg.Write("useSmtpHost", self.useSmtpHostTextCtrl.GetValue())
-            self.cfg.Write("useSmtpPort", str(self.useSmtpPortSpinCtrl.GetValue()))
-            self.cfg.Write("smtpConnectTimeout", str(self.smtpConnectTimeoutSpinCtrl.GetValue()))
-            self.cfg.Write("useSmtpHelo", self.useSmtpHeloTextCtrl.GetValue())
-            self.cfg.WriteBool("useAuth", self.useAuthCheckBox.GetValue())
-            self.cfg.Write("useAuthUser", self.useAuthUserTextCtrl.GetValue())
-            self.cfg.Write("useAuthPass", self.useAuthPassTextCtrl.GetValue())
-            self.cfg.WriteBool("useTls", self.useTlsCheckBox.GetValue())
+            self.cfg.WriteInt('appWidth', self.GetSizeTuple()[0])
+            self.cfg.WriteInt('appHeight', self.GetSizeTuple()[1])
+            self.cfg.Write('mailFrom', self.mailFromTextCtrl.GetValue())
+            self.cfg.Write('mailTo', self.mailToTextCtrl.GetValue())
+            self.cfg.WriteBool('useNs', self.useNsCheckBox.GetValue())
+            self.cfg.Write('useNsHost', self.useNsHostTextCtrl.GetValue())
+            self.cfg.Write('useNsPort', str(self.useNsPortSpinCtrl.GetValue()))
+            self.cfg.Write('nsQueryTimeout', str(self.nsQueryTimeoutSpinCtrl.GetValue()))
+            self.cfg.WriteBool('useNsTcp', self.useNsTcpCheckBox.GetValue())
+            self.cfg.WriteBool('useSmtp', self.useSmtpCheckBox.GetValue())
+            self.cfg.Write('useSmtpHost', self.useSmtpHostTextCtrl.GetValue())
+            self.cfg.Write('useSmtpPort', str(self.useSmtpPortSpinCtrl.GetValue()))
+            self.cfg.Write('smtpConnectTimeout', str(self.smtpConnectTimeoutSpinCtrl.GetValue()))
+            self.cfg.Write('useSmtpHelo', self.useSmtpHeloTextCtrl.GetValue())
+            self.cfg.WriteBool('useAuth', self.useAuthCheckBox.GetValue())
+            self.cfg.Write('useAuthUser', self.useAuthUserTextCtrl.GetValue())
+            self.cfg.Write('useAuthPass', self.useAuthPassTextCtrl.GetValue())
+            self.cfg.WriteBool('useTls', self.useTlsCheckBox.GetValue())
         else:
             self.cfg.DeleteAll()
         self.Destroy()
@@ -285,22 +283,13 @@ class SmtpTester(wx.Frame):
         self.mailMsgTextCtrl.SetValue(c_pattern_mail_to.sub("To: %s" % mailTo, mailMsg))
 
     def onUseNsCheckBox(self, e):
-        if e.IsChecked():
-            self.toggleNsOptions(True)
-        else:
-            self.toggleNsOptions(False)
+        self.toggleNsOptions(e.IsChecked())
 
     def onUseSmtpCheckBox(self, e):
-        if e.IsChecked():
-            self.toggleSmtpOptions(True)
-        else:
-            self.toggleSmtpOptions(False)
+        self.toggleSmtpOptions(e.IsChecked())
 
     def onAuthCheckBox(self, e):
-        if e.IsChecked():
-            self.toggleAuthOptions(True)
-        else:
-            self.toggleAuthOptions(False)
+        self.toggleAuthOptions(e.IsChecked())
 
     def toggleNsOptions(self, value):
         self.useNsHostTextCtrl.Enable(value)
@@ -505,5 +494,5 @@ class SmtpTester(wx.Frame):
     def getRandomText(self, words=100, word_min=1, word_max=15):
         result = []
         for word in range(1, words + 1):
-            result.append("".join(random.sample(string.letters,random.randrange(word_min, word_max))))
-        return " ".join(result)
+            result.append(''.join(random.sample(string.letters,random.randrange(word_min, word_max))))
+        return ' '.join(result)

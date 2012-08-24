@@ -28,10 +28,11 @@ setup(
     keywords = 'smtp tester',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
+        'Environment :: MacOS X',
         'Environment :: Win32 (MS Windows)',
         'Environment :: X11 Applications :: GTK',
         'Intended Audience :: System Administrators',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.6',
@@ -41,11 +42,9 @@ setup(
         'Topic :: Utilities'
     ],
 
-    install_requires = ['setuptools', 'wxPython', 'dnspython'],
+    install_requires = ['setuptools', 'dnspython'],
 
     packages = find_packages(),
     scripts = ['bin/smtptester'],
-    data_files = [
-      ('resources', ['resources/smtptester.ico'])
-    ]
+    data_files = ['smtptester.xpm']
 )
