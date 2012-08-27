@@ -22,7 +22,7 @@ from . import validators
 
 
 __app_name__ = 'SMTP Tester'
-__version_info__ = ('0', '1', '5')
+__version_info__ = ('0', '1', '6')
 __version__ = '.'.join(__version_info__)
 __author__ = 'Michael Paul Thomas Conigliaro'
 __author_email__ = 'mike [at] conigliaro [dot] org'
