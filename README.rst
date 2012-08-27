@@ -28,7 +28,7 @@ Screenshots
 Installation
 ------------
 
-Install `wxPython <http://wxpython.org/download.php>`_ (version 2.9)
+Install `wxPython <http://wxpython.org/download.php>`_ (preferably version 2.9, although success has been reported for 2.8 on some platforms)
 
 ::
 
