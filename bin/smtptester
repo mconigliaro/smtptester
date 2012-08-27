@@ -12,5 +12,5 @@ except ImportError:
     import smtptester
 
 app = smtptester.wx.App(redirect=False)
-frame = smtptester.SmtpTester(None, smtptester.wx.ID_ANY, smtptester.__name__)
+frame = smtptester.SmtpTester(None, smtptester.wx.ID_ANY, smtptester.__app_name__)
 app.MainLoop()
