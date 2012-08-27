@@ -66,7 +66,7 @@ class SmtpTester(wx.Frame):
         wx.Frame.__init__(self, parent, id, title,
           size=(self.cfg.ReadInt('appWidth', APP_DEFAULT_WIDTH),
                 self.cfg.ReadInt('appHeight', APP_DEFAULT_HEIGHT)))
-        self.SetIcon(wx.Icon(APP_ICON))
+        self.SetIcon(wx.Icon(APP_ICON, wx.BITMAP_TYPE_ANY))
         self.panel = wx.Panel(self)
 
         # Define file menu
