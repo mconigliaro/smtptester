@@ -19,11 +19,11 @@ Features
 Screenshots
 -----------
 
-.. image:: /mconigliaro/smtptester/raw/master/screenshots/osx.png
+.. image:: https://github.com/mconigliaro/smtptester/raw/master/screenshots/osx.png
 
-.. image:: /mconigliaro/smtptester/raw/master/screenshots/linux.png
+.. image:: https://github.com/mconigliaro/smtptester/raw/master/screenshots/linux.png
 
-.. image:: /mconigliaro/smtptester/raw/master/screenshots/windows.png
+.. image:: https://github.com/mconigliaro/smtptester/raw/master/screenshots/windows.png
 
 Installation
 ------------
