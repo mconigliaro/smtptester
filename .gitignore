@@ -1,6 +1,5 @@
+.DS_Store
+__pycache__
 *.egg-info
-*.pyc
-distribute-*
-/build
-/dist
-/sandbox
+build/
+dist/
