@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.1: 2020-03-22
+- Fix for pip not installing dependencies
+
 ## 1.0.0: 2020-02-29
 - Complete rewrite
   - Support Python 3.7+

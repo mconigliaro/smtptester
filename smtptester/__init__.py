@@ -7,7 +7,7 @@ import sys
 import time as t
 
 NAME = "SMTP Tester"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 AUTHOR = "Mike Conigliaro"
 DOMAIN = "conigliaro.org"
 COPYRIGHT = f"""Copyright (c) 2020 {AUTHOR}"""

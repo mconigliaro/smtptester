@@ -32,5 +32,8 @@ setuptools.setup(
         "Topic :: Utilities",
     ],
     python_requires=">=3.7",
-    requires=["dnspython (<2.0, >=1.16)", "pyside2 (< 6.0, >=5.14)"],
+    install_requires=[
+        "dnspython >=1.16, <2.0",
+        "pyside2 >=5.14, <6.0"
+    ]
 )
