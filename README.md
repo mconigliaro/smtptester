@@ -2,7 +2,7 @@
 
 As a consultant at a managed services provider, I spent a long time searching for a tool that would help me troubleshoot SMTP problems quickly and easily without having to resort to telnet. Finally, I gave up and wrote my own.
 
-![](screenshots/smtptester-gui.png)
+![](https://raw.githubusercontent.com/mconigliaro/smtptester/master/screenshots/smtptester-gui.png)
 
 ## Features
 
@@ -43,7 +43,3 @@ Use `--help` to see available options.
     ```
     release <version>
     ```
-
-### References:
-
-  - https://tools.ietf.org/html/rfc5321
