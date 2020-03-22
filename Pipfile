@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "~= 4.6"
+pytest-cov = "~= 2.8"
+pytest-flake8 = "~= 1.0"
 setuptools = "*"
 twine = "*"
 wheel = "*"
