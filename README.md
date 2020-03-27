@@ -1,5 +1,7 @@
 # SMTP Tester
 
+[![smtptester](https://circleci.com/gh/mconigliaro/smtptester.svg?style=svg)](https://circleci.com/gh/mconigliaro/cellular_automata)
+
 As a consultant at a managed services provider, I spent a long time searching for a tool that would help me troubleshoot SMTP problems quickly and easily without having to resort to telnet. Finally, I gave up and wrote my own.
 
 ![](https://raw.githubusercontent.com/mconigliaro/smtptester/master/screenshots/smtptester-gui.png)
@@ -25,7 +27,7 @@ Use `--help` to see available options.
 ### Getting Started
 
     pip install pipenv
-    pipenv install [--dev]
+    pipenv install --dev
     pipenv shell
     ...
 
