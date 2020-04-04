@@ -14,6 +14,6 @@ jobs:
           command: pipenv install --dev
       - run:
           name: Run pytest
-          command: pipenv run pytest --junitxml=junit.xml
+          command: pipenv run pytest --junitxml=test-results/pytest/results.xml
       - store_test_results:
-          path: junit.xml
+          path: test-results
