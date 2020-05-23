@@ -41,7 +41,4 @@ Use `--help` to see available options.
 
 1. Update [CHANGELOG.md](CHANGELOG.md)
 
-1. Run `release` script:
-    ```
-    release <version>
-    ```
+1. Run `make release`
