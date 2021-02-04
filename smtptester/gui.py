@@ -278,14 +278,14 @@ class CentralWidget(qtw.QWidget):
 
     @qtc.Slot()
     def working_mode_enable(self):
-        log.debug(f"Worker thread started")
+        log.debug("Worker thread started")
         self.button_cancel.setEnabled(True)
         self.button_ok.setEnabled(False)
 
     @qtc.Slot()
     def working_mode_disable(self):
         if self.worker.isFinished():
-            log.debug(f"Worker thread finished")
+            log.debug("Worker thread finished")
         self.button_cancel.setEnabled(False)
         self.button_ok.setEnabled(True)
 
@@ -323,7 +323,7 @@ class CentralWidget(qtw.QWidget):
     @qtc.Slot()
     def terminate_worker(self):
         if self.worker.isRunning():
-            log.debug(f"Terminating worker thread")
+            log.debug("Terminating worker thread")
             self.worker.terminate()
             self.worker.wait()
 
