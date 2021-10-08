@@ -18,8 +18,8 @@ As a consultant at a managed services provider, I spent a long time searching fo
 
 ## Running the Application
 
-    smtptester[-gui]
-
+    smtptester-gui  # With GUI
+    smtptester      # Without GUI
 Use `--help` to see available options.
 
 ## Development
