@@ -1,6 +1,6 @@
 # SMTP Tester
 
-[![smtptester](https://circleci.com/gh/mconigliaro/smtptester.svg?style=svg)](https://circleci.com/gh/mconigliaro/smtptester)
+[![Continuous Integration](https://github.com/mconigliaro/smtptester/actions/workflows/ci.yml/badge.svg)](https://github.com/mconigliaro/smtptester/actions/workflows/ci.yml)
 
 As a consultant at a managed services provider, I spent a long time searching for a tool that would help me troubleshoot SMTP problems quickly and easily without having to resort to telnet. Finally, I gave up and wrote my own.
 
@@ -18,17 +18,20 @@ As a consultant at a managed services provider, I spent a long time searching fo
 
 ## Running the Application
 
-    smtptester-gui  # With GUI
-    smtptester      # Without GUI
-Use `--help` to see available options.
+### With GUI
+
+    smtptester-gui [options]
+
+### CLI Only
+
+    smtptester <options>
 
 ## Development
 
 ### Getting Started
 
-    pip install pipenv
-    pipenv install --dev
-    pipenv shell
+    poetry install
+    poetry shell
     ...
 
 ### Running Tests
@@ -37,8 +40,6 @@ Use `--help` to see available options.
 
 ### Releases
 
-1. Bump `VERSION` in [smtptester/\_\_init\_\_.py](smtptester/__init__.py)
-
+1. Bump `version` in [pyproject.toml](pyproject.toml)
 1. Update [CHANGELOG.md](CHANGELOG.md)
-
 1. Run `make release`

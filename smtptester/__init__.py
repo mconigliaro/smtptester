@@ -1,44 +1,44 @@
-import logging as log
+import importlib.metadata
+import logging
+import sys
+import time
+
 import smtptester.dns as dns
 import smtptester.smtp as smtp
-import smtptester.opts as opts
+import smtptester.cli as cli
 import smtptester.util as util
-import sys
-import time as t
 
-NAME = "SMTP Tester"
-VERSION = "1.0.1"
-AUTHOR = "Mike Conigliaro"
-DOMAIN = "conigliaro.org"
-COPYRIGHT = f"""Copyright (c) 2020 {AUTHOR}"""
+
+META = importlib.metadata.metadata(__package__)
+
+log = logging.getLogger(__name__)
 
 
 class SMTPTester:
     def __init__(
         self,
-        recipient,
-        sender,
-        message,
-        dns_host,
-        dns_port,
-        dns_timeout,
-        dns_proto,
-        smtp_host,
-        smtp_port,
-        smtp_timeout,
-        smtp_helo,
-        smtp_tls,
-        smtp_auth_user,
-        smtp_auth_pass,
+        recipient: str,
+        sender: str,
+        message: str,
+        dns_host: str,
+        dns_port: int,
+        dns_timeout: int,
+        dns_proto: str,
+        smtp_host: str,
+        smtp_port: int,
+        smtp_timeout: int,
+        smtp_helo: str,
+        smtp_tls: str,
+        smtp_auth_user: str,
+        smtp_auth_pass: str,
     ):
-
-        log.info(f"Session started: {t.strftime('%Y-%m-%d %H:%M:%S %Z')}")
-        options = opts.log(
+        log.info(f"Session started: {time.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+        options_list = cli.options_list(
             locals().items(),
             redacted_keys=["smtp_auth_user", "smtp_auth_pass"],
             no_log_keys=["self"],
         )
-        log.debug(f"Options: {options}")
+        log.debug(f"Options: {options_list}")
 
         self.recipient = recipient
         self.sender = sender
@@ -60,8 +60,8 @@ class SMTPTester:
         self.smtp_auth_pass = smtp_auth_pass
 
     def run(self):
+        hosts = []
         try:
-            hosts = []
             if self.smtp_host:
                 hosts = smtp.hosts_set(
                     self.resolver, self.smtp_host, port=self.smtp_port
@@ -71,13 +71,13 @@ class SMTPTester:
                 hosts = smtp.hosts_discover(self.resolver, domain, port=self.smtp_port)
             log_hosts = [f"{h.name}({h.address}):{h.port}" for h in hosts]
             log.info(f"Using SMTP hosts: {', '.join(log_hosts)}")
-        except (dns.DNSConnectionError, dns.DNSNoDomain) as e:
+        except dns.DNSException as e:
             log.error(e)
 
         for host in hosts:
             try:
-                log_level = log.getLogger().getEffectiveLevel()
-                debuglevel = 1 if log_level == log.DEBUG else 0
+                log_level = log.getEffectiveLevel()
+                debuglevel = 1 if log_level == logging.DEBUG else 0
                 smtp.send(
                     host,
                     self.recipient,
@@ -101,4 +101,4 @@ class SMTPTester:
                 break
         else:
             log.error("No SMTP hosts available")
-        log.info(f"Session finished: {t.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+        log.info(f"Session finished: {time.strftime('%Y-%m-%d %H:%M:%S %Z')}")

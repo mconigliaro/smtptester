@@ -1,10 +1,15 @@
-VERSION := $(shell python -c 'import smtptester; print(smtptester.VERSION)')
-
-release:
-	git tag "$(VERSION)"
+tag:
+	git tag "$(shell poetry version --short)"
 	git push --tags
 
-	# https://packaging.python.org/tutorials/packaging-projects/
-	rm -rf build dist ./*.egg-info
-	./setup.py sdist bdist_wheel
-	twine upload dist/*
+build:
+	poetry build
+
+publish-test: build
+	poetry config repositories.testpypi https://test.pypi.org/legacy/
+	poetry publish -r testpypi
+
+publish: build
+	poetry publish
+
+release: tag publish

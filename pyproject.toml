@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "smtptester"
+version = "1.1.0"
+description = "A graphical and command line SMTP diagnostic tool"
+readme = "README.md"
+authors = ["Mike Conigliaro <mike@conigliaro.org>"]
+homepage = "https://github.com/mconigliaro/smtptester"
+repository = "https://github.com/mconigliaro/smtptester"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Communications :: Email",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+
+[tool.poetry.dependencies]
+dnspython = "^2.2"
+pyside6 = "^6.3"
+python = ">=3.7,<3.11"
+
+[tool.poetry.dev-dependencies]
+black = { version = "^22.3.0", allow-prereleases = true }
+pytest = "^6.2"
+pytest-cov = "^3.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+smtptester = "smtptester.cli:main"
+smtptester-gui = "smtptester.gui:main"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+addopts = "--cov smtptester -ra"
