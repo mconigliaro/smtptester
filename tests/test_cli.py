@@ -1,8 +1,9 @@
-import pytest as pt
-import smtptester.opts as opts
+import pytest
+
+import smtptester.cli as cli
 
 
-@pt.mark.parametrize(
+@pytest.mark.parametrize(
     "args, interface",
     [
         (("--log-level", "debug"), None),
@@ -11,10 +12,10 @@ import smtptester.opts as opts
     ],
 )
 def test_parse(args, interface):
-    assert isinstance(opts.parse(args, interface), opts.Options)
+    assert isinstance(cli.parse(args, interface), cli.Options)
 
 
-@pt.mark.parametrize(
+@pytest.mark.parametrize(
     "options, redacted_keys, no_log_keys, expected",
     [
         (
@@ -25,8 +26,10 @@ def test_parse(args, interface):
         )
     ],
 )
-def test_log(options, redacted_keys, no_log_keys, expected):
+def test_options_list(options, redacted_keys, no_log_keys, expected):
     assert (
-        opts.log(options.items(), redacted_keys=redacted_keys, no_log_keys=no_log_keys)
+        cli.options_list(
+            options.items(), redacted_keys=redacted_keys, no_log_keys=no_log_keys
+        )
         == expected
     )

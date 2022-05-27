@@ -1,13 +1,16 @@
-import pytest as pt
+import pytest
+
 import smtptester.util as util
 
 
-@pt.mark.parametrize("addr, expected", [("127.0.0.1", True), ("example.test", False)])
+@pytest.mark.parametrize(
+    "addr, expected", [("127.0.0.1", True), ("example.test", False)]
+)
 def test_is_ip_address(addr, expected):
     assert util.is_ip_address(addr) == expected
 
 
-@pt.mark.parametrize(
+@pytest.mark.parametrize(
     "addr, expected",
     [
         ("", util.EmailAddress(user="", domain="")),

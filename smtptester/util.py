@@ -1,25 +1,26 @@
-import ipaddress as ip
+import ipaddress
 import re
-import typing as t
+from typing import NamedTuple
 
 
-class EmailAddress(t.NamedTuple):
+class EmailAddress(NamedTuple):
     user: str
     domain: str
 
 
-def is_ip_address(addr):
+def is_ip_address(addr: str) -> bool:
     try:
-        ip.ip_address(addr)
+        ipaddress.ip_address(addr)
         return True
     except ValueError:
         return False
 
 
-def parse_email_address(address):
-    u = re.search(r"^([^@]*)@?", address).group(1)
-    try:
-        d = re.search(r"@([^@]*)$", address).group(1)
-    except AttributeError:
-        d = ""
+def parse_email_address(address: str) -> EmailAddress:
+    u_match = re.search(r"^([^@]*)@?", address)
+    u = "" if u_match is None else u_match.group(1)
+
+    d_match = re.search(r"@([^@]*)$", address)
+    d = "" if d_match is None else d_match.group(1)
+
     return EmailAddress(user=u, domain=d)
