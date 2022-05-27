@@ -1,5 +1,5 @@
 import logging
-from typing import Iterable, NamedTuple
+from typing import NamedTuple
 
 import dns.resolver as resolver
 

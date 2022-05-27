@@ -7,7 +7,6 @@ from typing import Callable
 import PySide6.QtCore as qtc
 import PySide6.QtGui as qtg
 import PySide6.QtWidgets as qtw
-from attr import attr
 
 import smtptester
 import smtptester.cli as cli

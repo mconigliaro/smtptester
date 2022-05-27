@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "smtptester"
-version = "1.1.0"
+version = "1.1.1"
 description = "A graphical and command line SMTP diagnostic tool"
 readme = "README.md"
 authors = ["Mike Conigliaro <mike@conigliaro.org>"]

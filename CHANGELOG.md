@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.1.0: 2022-05-26
+## 1.1.1: 2022-05-26
 
 - Use QT6 (PySide6)
 - Use [Poetry](https://python-poetry.org/)
