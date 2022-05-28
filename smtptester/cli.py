@@ -11,7 +11,7 @@ class Options(argparse.Namespace):
     pass
 
 
-def parse(args: Union[list[str], None] = None, interface: str = "") -> Options:
+def parse(args: Union[Iterable[str], None] = None, interface: str = "") -> Options:
     parser = argparse.ArgumentParser(
         add_help=False,
         epilog=f"{smtptester.META['Author']} <{smtptester.META['Author-email']}>",
@@ -66,7 +66,7 @@ def parse(args: Union[list[str], None] = None, interface: str = "") -> Options:
 
 
 def options_list(
-    options: Iterable[tuple], redacted_keys: list = [], no_log_keys: list = []
+    options: Iterable[tuple], redacted_keys: Iterable = [], no_log_keys: Iterable = []
 ) -> str:
     options_list = []
     for k, v in sorted(options):

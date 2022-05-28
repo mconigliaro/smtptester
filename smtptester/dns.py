@@ -1,5 +1,5 @@
 import logging
-from typing import NamedTuple
+from typing import Iterable, NamedTuple
 
 import dns.resolver as resolver
 
@@ -42,14 +42,14 @@ class DNSResolver:
         )
         log.debug(f"Using DNS hosts: {hosts}")
 
-    def a(self, domain: str) -> list[ARecord]:
+    def a(self, domain: str) -> Iterable[ARecord]:
         rs = []
         for r in self._resolve(domain, "a"):
             log.debug(f"Got answer: {r.address}")
             rs.append(ARecord(name=domain, address=str(r.address).rstrip(".")))
         return rs
 
-    def mx(self, domain: str) -> list[MXRecord]:
+    def mx(self, domain: str) -> Iterable[MXRecord]:
         rs = []
         for r in sorted(self._resolve(domain, "mx"), key=lambda r: r.preference):
             log.debug(f"Got answer: {r.preference} {r.exchange}")

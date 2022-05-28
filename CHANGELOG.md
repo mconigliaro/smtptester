@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2: 2022-05-27
+
+- Require Python `^3.8`
+
 ## 1.1.1: 2022-05-26
 
 - Use QT6 (PySide6)

@@ -3,7 +3,7 @@ import logging
 import os
 import smtplib
 import socket
-from typing import NamedTuple
+from typing import Iterable, NamedTuple
 
 import smtptester.util as util
 import smtptester.dns as dns
@@ -30,7 +30,7 @@ class SMTPHost(NamedTuple):
 
 def hosts_discover(
     resolver: dns.DNSResolver, domain: str, port: int = SMTP_DEFAULT_PORT
-) -> list[SMTPHost]:
+) -> Iterable[SMTPHost]:
     hosts = []
     try:
         for mx in resolver.mx(domain):
@@ -50,7 +50,7 @@ def hosts_discover(
 
 def hosts_set(
     resolver: dns.DNSResolver, host: str, port=SMTP_DEFAULT_PORT
-) -> list[SMTPHost]:
+) -> Iterable[SMTPHost]:
     if util.is_ip_address(host):
         name = ""
         address = host
