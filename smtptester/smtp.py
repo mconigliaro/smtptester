@@ -76,12 +76,13 @@ def send(
     log_host = f"{host.name}({host.address}):{host.port}"
     try:
         log.debug(f"Trying SMTP host: {log_host}")
-        s = smtplib.SMTP(
+        f = smtplib.SMTP_SSL if tls == 'yes' else smtplib.SMTP
+        s = f(
             host=host.address, port=host.port, timeout=timeout, local_hostname=helo
         )
         s.set_debuglevel(debuglevel)
         s.ehlo_or_helo_if_needed()
-        if tls == "yes" or (tls == "try" and s.has_extn("STARTTLS")):
+        if (tls == "try" and s.has_extn("STARTTLS")):
             s.starttls()
         if auth_user or auth_pass:
             s.login(auth_user, auth_pass)
