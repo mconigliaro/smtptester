@@ -27,7 +27,7 @@ pyside6 = "^6.3"
 python = ">=3.8,<3.11"
 
 [tool.poetry.dev-dependencies]
-black = { version = "^22.3.0", allow-prereleases = true }
+black = { version = "^24.3.0", allow-prereleases = true }
 pytest = "^6.2"
 pytest-cov = "^3.0"
 
